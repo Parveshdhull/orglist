@@ -1,15 +1,30 @@
+import { makeObservable, observable, action } from "mobx"
 import { watchFile } from '../utils/fs';
 
-let fileUri: string;
-let contentString: string;
+class OrgListContentClass {
 
-function updateContent(content: string) {
-    contentString = content;
+    fileUri: string = "";
+    contentString: string = "";
+
+    constructor() {
+        makeObservable(this, {
+            contentString: observable,
+            updateContent: action,
+        })
+    }
+
+    updateContent(content: string) {
+        this.contentString = content;
+    }
+
+    updateFileUri(uri: string) {
+        this.fileUri = uri;
+        watchFile(uri, 5000, this.updateContent.bind(this));
+    }
+
 }
 
-function updateFileUri(uri: string) {
-    fileUri = uri;
-    watchFile(uri, 5000, updateContent);
-}
+const orgListContent = new OrgListContentClass()
 
-export { contentString, updateFileUri }
+export default OrgListContentClass
+export { orgListContent }

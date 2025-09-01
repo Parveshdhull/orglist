@@ -6,6 +6,7 @@ const watchFile = (uri: string, interval = 5000, callback: (content: string) => 
     const checkFile = async () => {
         try {
             const content = await RNFS.readFile(uri, 'utf8');
+            console.log("data", uri, content, callback)
             if (content !== lastContent) {
                 lastContent = content;
                 callback(content);
