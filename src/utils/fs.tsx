@@ -25,8 +25,7 @@ const pickFile = async (callback: (content: string) => void) => {
         const [result] = await pick({
             mode: 'open',
         })
-        console.log(result)
-        watchFile(result.uri, 5000, callback);
+        callback(result.uri);
     } catch (err) {
     }
 }

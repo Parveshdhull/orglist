@@ -1,15 +1,13 @@
-import { SafeAreaView, TouchableOpacity, Text } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import styles from '../styles/home-screen';
-import { pickFile } from '../utils/fs';
+import OrgList from './org-list';
+import FilePickerView from './file-picker';
+import { contentString } from '../utils/org-list';
 
 function HomeScreen() {
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.orgList}> {'OrgList'} </Text>
-            <TouchableOpacity style={styles.buttonContainer}
-                onPress={() => pickFile((content) => console.log(content))}>
-                <Text style={styles.button}> {'Open Org File'} </Text>
-            </TouchableOpacity>
+            {contentString == null ? <FilePickerView /> : <OrgList />}
         </SafeAreaView>
     );
 }
